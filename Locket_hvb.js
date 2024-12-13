@@ -11,7 +11,7 @@ const mapping = {
 // ========= @HoangVanBao ========= // 
 var ua = $request.headers["User-Agent"] || $request.headers["user-agent"];
 var obj = JSON.parse($response.body);
-obj.Attention = "Chúc mừng bạn Hoàng Văn Bảo! Vui lòng không bán hoặc chia sẻ cho người khác!";
+obj.Attention = "Chúc mừng bạn Hoàng Văn Bảo! Vui lòng không bán hoặc chia sẻ cho người khác!\nCoder By HVB";  // Thêm dòng Coder By HVB
 
 // Tạo thông tin về gói Locket Gold với ngày tham gia là 12/12/2024
 var hoangvanbao = {
