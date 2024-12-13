@@ -28,7 +28,7 @@ var hvb_entitlement = {
   grace_period_expires_date: null,
   purchase_date: "2024-07-28T01:04:17Z",
   product_identifier: "com.hoangvanbao.premium.yearly",
-  expires_date: "2099-12-18T01:04:17Z"
+  expires_date: "2099-12-18T01:04:17Z" // Đảm bảo gói Locket Gold không hết hạn
 };
 
 // Kiểm tra loại gói và gán Locket Gold vào entitlements
