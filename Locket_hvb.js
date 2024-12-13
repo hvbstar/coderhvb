@@ -11,7 +11,17 @@ const mapping = {
 // ========= @HoangVanBao ========= // 
 var ua = $request.headers["User-Agent"] || $request.headers["user-agent"];
 var obj = JSON.parse($response.body);
-obj.Attention = "Chúc mừng bạn Hoàng Văn Bảo! Vui lòng không bán hoặc chia sẻ cho người khác!\nCoder By HVB";  // Thêm dòng Coder By HVB
+obj.Attention = "Chúc mừng bạn Hoàng Văn Bảo! Vui lòng không bán hoặc chia sẻ cho người khác!";
+
+// Thêm dòng Coder By HVB dưới thông tin ngày tham gia
+obj.subscriber.subscriptions["com.hoangvanbao.premium.yearly"].original_purchase_date = specificDate; // Ngày tham gia
+obj.subscriber.subscriptions["com.hoangvanbao.premium.yearly"].purchase_date = specificDate; // Ngày tham gia
+obj.subscriber.entitlements.Locket = {
+  ...obj.subscriber.entitlements.Locket,
+  purchase_date: specificDate,  // Ngày tham gia
+  expires_date: "2099-12-18T01:04:17Z" // Đảm bảo gói Locket Gold không hết hạn
+};
+obj.subscriber.entitlements.Locket.Coder = "Coder By HVB";  // Thêm dòng Coder By HVB
 
 // Tạo thông tin về gói Locket Gold với ngày tham gia là 12/12/2024
 var hoangvanbao = {
