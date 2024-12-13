@@ -42,4 +42,8 @@ if (match) {
   obj.subscriber.entitlements.Locket = hvb_entitlement; // Đảm bảo Locket Gold được thêm vào
 }
 
+// Thêm log để kiểm tra nội dung response đã chỉnh sửa
+console.log("Modified Response Body:", JSON.stringify(obj));
+
+// Trả kết quả sau khi chỉnh sửa
 $done({ body: JSON.stringify(obj) });
