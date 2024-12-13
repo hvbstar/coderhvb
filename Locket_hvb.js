@@ -1,3 +1,6 @@
+// Đặt ngày tham gia là 12/12/2024
+var specificDate = "2024-12-12T00:00:00Z";  // Ngày 12/12/2024 ở định dạng ISO 8601
+
 // ========= ID ========= //
 const mapping = {
   '%E8%BD%A6%E7%A5%A8%E7%A5%A8': ['vip+watch_vip'],
@@ -10,7 +13,7 @@ var ua = $request.headers["User-Agent"] || $request.headers["user-agent"];
 var obj = JSON.parse($response.body);
 obj.Attention = "Chúc mừng bạn Hoàng Văn Bảo! Vui lòng không bán hoặc chia sẻ cho người khác!";
 
-// Tạo thông tin về gói Locket Gold
+// Tạo thông tin về gói Locket Gold với ngày tham gia là 12/12/2024
 var hoangvanbao = {
   is_sandbox: false,
   ownership_type: "PURCHASED",
@@ -19,14 +22,14 @@ var hoangvanbao = {
   expires_date: "2099-12-18T01:04:17Z", // Ngày hết hạn lâu dài
   grace_period_expires_date: null,
   unsubscribe_detected_at: null,
-  original_purchase_date: "2024-07-28T01:04:18Z",
-  purchase_date: "2024-07-28T01:04:17Z",
+  original_purchase_date: specificDate,  // Ngày tham gia là 12/12/2024
+  purchase_date: specificDate,  // Ngày tham gia là 12/12/2024
   store: "app_store"
 };
 
 var hvb_entitlement = {
   grace_period_expires_date: null,
-  purchase_date: "2024-07-28T01:04:17Z",
+  purchase_date: specificDate,  // Ngày tham gia là 12/12/2024
   product_identifier: "com.hoangvanbao.premium.yearly",
   expires_date: "2099-12-18T01:04:17Z" // Đảm bảo gói Locket Gold không hết hạn
 };
