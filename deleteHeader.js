@@ -1,21 +1,23 @@
 // ========= Header Modification ========= //
-const version = 'V1.0.4'; // Cập nhật phiên bản
+const version = 'V1.0.3';
 
-// Hàm thiết lập giá trị cho header
 function setHeaderValue(headers, key, value) {
-  const lowerCaseKey = key.toLowerCase();
-  headers[lowerCaseKey] = value;
+  var lowerKey = key.toLowerCase();
+  if (lowerKey in headers) {
+    headers[lowerKey] = value;
+  } else {
+    headers[key] = value;
+  }
 }
 
 // Lấy headers hiện tại từ request
-const modifiedHeaders = { ...$request.headers };
+var modifiedHeaders = $request.headers;
 
-// Thay đổi hoặc xóa giá trị của các header mục tiêu
-const targetHeaders = ["X-RevenueCat-ETag"]; // Thêm các header khác nếu cần
-targetHeaders.forEach(header => setHeaderValue(modifiedHeaders, header, ""));
+// Thay đổi giá trị của X-RevenueCat-ETag
+setHeaderValue(modifiedHeaders, "X-RevenueCat-ETag", "");
 
 // Debug: In header đã sửa (tuỳ chọn)
-console.log("Modified Headers:", JSON.stringify(modifiedHeaders, null, 2));
+console.log("Modified Headers:", JSON.stringify(modifiedHeaders));
 
 // Kết thúc request với header đã sửa đổi
 $done({ headers: modifiedHeaders });
