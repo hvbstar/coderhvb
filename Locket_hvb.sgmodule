@@ -1,16 +1,18 @@
 #!url=https://raw.githubusercontent.com/hvbstar/coderhvb/main/Locket_hvb.sgmodule
 #!name=Locket-HVB_Gold
-#!desc=Crack By HoangVanBao
+#!desc=Crack By HoangVanBao - Universal Version
 
 [General]
-user-agent = Locket/1.0.0 (iPhone; iOS 16.0; Scale/3.00)
+# Chấp nhận mọi User-Agent để tương thích nhiều nền tảng
+user-agent = *
 
 [Script]
-# ~ By HoangVanBao
-# ~ Enhanced for Shadowrocket, Surge, & LanceX
+# Xử lý phản hồi từ RevenueCat API
 revenuecat = type=http-response, pattern=^https:\/\/api\.revenuecat\.com\/.+\/(receipts$|subscribers\/[^/]+$), script-path=https://raw.githubusercontent.com/hvbstar/coderhvb/main/Locket_hvb.js, requires-body=true, max-size=-1, timeout=120
 
+# Xóa các header không cần thiết
 deleteHeader = type=http-request, pattern=^https:\/\/api\.revenuecat\.com\/.+\/(receipts|subscribers), script-path=https://raw.githubusercontent.com/hvbstar/coderhvb/main/deleteHeader.js, timeout=120
 
 [MITM]
-hostname = %APPEND% api.revenuecat.com
+# Đảm bảo MITM hoạt động với RevenueCat API
+hostname = *.revenuecat.com
