@@ -12,12 +12,16 @@ const mapping = {
 var ua = $request.headers["User-Agent"] || $request.headers["user-agent"];
 var obj;
 
+// In ra nội dung phản hồi để kiểm tra nếu cần
+console.log("Original Response Body:", $response.body);
+
 try {
-    obj = JSON.parse($response.body);
+  obj = JSON.parse($response.body);
 } catch (e) {
-    console.log("Error parsing JSON:", e);
-    $done({});
-    return;
+  console.log("Error parsing JSON:", e);
+  // Nếu không thể phân tích cú pháp, trả về đối tượng JSON rỗng
+  $done({ body: '{}' });
+  return;
 }
 
 obj.Attention = "Chúc mừng bạn Hoàng Văn Bảo! Vui lòng không bán hoặc chia sẻ cho người khác!";
