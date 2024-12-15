@@ -1,13 +1,9 @@
 // ========= Header Modification ========= //
 const version = 'V1.0.3';
 
-function setHeaderValue(headers, key, value) {
-  var lowerKey = key.toLowerCase();
-  if (lowerKey in headers) {
-    headers[lowerKey] = value;
-  } else {
-    headers[key] = value;
-  }
+function setHeaderValue(e, a, d) {
+  var r = a.toLowerCase();
+  r in e ? e[r] = d : e[a] = d;
 }
 
 // Lấy headers hiện tại từ request
