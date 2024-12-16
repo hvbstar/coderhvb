@@ -7,15 +7,18 @@ function setHeaderValue(e, a, d) {
 }
 
 // Lấy headers hiện tại từ request
-var modifiedHeaders = $request.headers;
+var modifiedHeaders = $request.headers || {};
 
-// Kiểm tra xem header "X-RevenueCat-ETag" có tồn tại không trước khi thay đổi
-if(modifiedHeaders["X-RevenueCat-ETag"]) {
+// Kiểm tra và xóa "X-RevenueCat-ETag" nếu tồn tại
+if (modifiedHeaders["X-RevenueCat-ETag"] || modifiedHeaders["x-revenuecat-etag"]) {
   setHeaderValue(modifiedHeaders, "X-RevenueCat-ETag", "");
+  console.log("Header X-RevenueCat-ETag removed");
+} else {
+  console.log("X-RevenueCat-ETag not found");
 }
 
-// Debug: In header đã sửa (tuỳ chọn)
+// Debug: In header đã sửa
 console.log("Modified Headers:", JSON.stringify(modifiedHeaders));
 
-// Kết thúc request với header đã sửa đổi
+// Trả về header mới
 $done({ headers: modifiedHeaders });
