@@ -3,7 +3,8 @@
 #!desc=Crack By HoangVanBao
 
 [General]
-user-agent = Locket/1.0.0 (iPhone; iOS 16.0; Scale/3.00)
+user-agent = Locket/1.0.0 (iPhone; Scale/3.00)
+
 
 [Script]
 # ~ By HoangVanBao
