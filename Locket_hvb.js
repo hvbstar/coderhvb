@@ -9,7 +9,7 @@ const mapping = {
 
 // ========= Phần cố định ========= //
 // ========= @HoangVanBao ========= // 
-var ua = $request.headers["User-Agent"] || $request.headers["user-agent"];
+var ua = ($request.headers["User-Agent"] || $request.headers["user-agent"] || "").toLowerCase();
 var obj = JSON.parse($response.body);
 obj.Attention = "Chúc mừng bạn Hoàng Văn Bảo! Vui lòng không bán hoặc chia sẻ cho người khác!";
 
