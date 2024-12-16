@@ -5,7 +5,6 @@
 [General]
 user-agent = Locket/1.0.0 (iPhone; Scale/3.00)
 
-
 [Script]
 # ~ By HoangVanBao
 # ~ Enhanced for Shadowrocket, Surge, & LanceX
@@ -15,3 +14,4 @@ deleteHeader = type=http-request, pattern=^https:\/\/api\.revenuecat\.com\/.+\/(
 
 [MITM]
 hostname = %APPEND% api.revenuecat.com
+skip-cert-verify = true
