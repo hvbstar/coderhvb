@@ -10,6 +10,7 @@ const mapping = {
 // ========= Kiểm tra và Khởi tạo ========= //
 var ua = $request.headers["User-Agent"] || $request.headers["user-agent"];
 
+// Bắt lỗi khi parsing response
 try {
   var obj = JSON.parse($response.body);
 } catch (e) {
