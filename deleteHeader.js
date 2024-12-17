@@ -1,19 +1,18 @@
 // ========= Header Modification ========= //
-const version = 'V1.0.3';
-
-function setHeaderValue(e, a, d) {
-  var r = a.toLowerCase();
-  r in e ? e[r] = d : e[a] = d;
+// Script By HoangVanBao - Version 1.0.3
+function setHeaderValue(headers, headerName, newValue) {
+  const lowerHeader = headerName.toLowerCase();
+  headers[lowerHeader] ? headers[lowerHeader] = newValue : headers[headerName] = newValue;
 }
 
 // Lấy headers hiện tại từ request
-var modifiedHeaders = $request.headers;
+const modifiedHeaders = $request.headers;
 
-// Thay đổi giá trị của X-RevenueCat-ETag
+// Xóa giá trị "X-RevenueCat-ETag"
 setHeaderValue(modifiedHeaders, "X-RevenueCat-ETag", "");
 
-// Debug: In header đã sửa (tuỳ chọn)
-console.log("Modified Headers:", JSON.stringify(modifiedHeaders));
+// Debug header đã sửa đổi
+console.log("Modified Request Headers:", JSON.stringify(modifiedHeaders, null, 2));
 
-// Kết thúc request với header đã sửa đổi
+// Trả lại headers đã chỉnh sửa
 $done({ headers: modifiedHeaders });
