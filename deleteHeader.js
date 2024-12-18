@@ -1,3 +1,4 @@
+// Updated deleteHeader.js
 // ========= Header Modification ========= //
 const version = 'V1.0.3';
 
