@@ -1,3 +1,4 @@
+// Updated Locket_hvb_fixed.js
 // ========= Đặt ngày tham gia là 12/12/2024 ========= //
 var specificDate = "2024-12-12T00:00:00Z"; // Định dạng ISO 8601
 
