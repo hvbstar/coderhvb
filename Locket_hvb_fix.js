@@ -1,6 +1,6 @@
-// Updated Locket_hvb_fixed.js
-// ========= Đặt ngày tham gia là 12/12/2024 ========= //
-var specificDate = "2024-12-12T00:00:00Z"; // Định dạng ISO 8601
+// Updated Locket_hvb_fix.js
+// ========= Đặt ngày tham gia là 21/12/2024 ========= //
+var specificDate = "2024-12-21T00:00:00Z"; // Định dạng ISO 8601
 
 // ========= ID Mapping ========= //
 const mapping = {
@@ -42,7 +42,8 @@ var hvb_entitlement = {
   grace_period_expires_date: null,
   purchase_date: specificDate, // Ngày tham gia
   product_identifier: "com.hoangvanbao.premium.yearly",
-  expires_date: "2099-12-18T01:04:17Z" // Ngày hết hạn lâu dài
+  expires_date: "2099-12-18T01:04:17Z", // Ngày hết hạn lâu dài
+  max_video_duration: 15 // Tăng thời lượng video lên 15 giây
 };
 
 // ========= Áp dụng Mapping ========= //
