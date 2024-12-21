@@ -1,14 +1,14 @@
-// Updated Locket_hvb_fix.js
-// ========= Đặt ngày tham gia là 21/12/2024 ========= //
-var specificDate = "2024-12-21T00:00:00Z"; // Định dạng ISO 8601
+// Updated Locket_hvb_fix.js with fixed user_id
+// ========= User ID Configuration ========= //
+const fixedUserId = "1234567890abcdef"; // Thay đổi ID này thành user_id thực của bạn
 
 // ========= ID Mapping ========= //
 const mapping = {
   '%E8%BD%A6%E7%A5%A8%E7%A5%A8': ['vip+watch_vip'],
-  'Locket': ['Gold'] // Đảm bảo rằng Locket Gold được sử dụng đúng cách
+  'Locket': ['Gold']
 };
 
-// ========= Kiểm tra và Khởi tạo ========= //
+// ========= Initialize ========= //
 var ua = $request.headers["User-Agent"] || $request.headers["user-agent"];
 
 // Bắt lỗi khi parsing response
@@ -24,31 +24,33 @@ if (!obj.subscriber) obj.subscriber = {};
 if (!obj.subscriber.entitlements) obj.subscriber.entitlements = {};
 if (!obj.subscriber.subscriptions) obj.subscriber.subscriptions = {};
 
-// ========= Tạo thông tin gói Locket Gold ========= //
+// Gán user_id cố định
+obj.subscriber.original_app_user_id = fixedUserId;
+
+// ========= Modify Subscription Data ========= //
+var specificDate = "2024-12-21T00:00:00Z"; // Ngày tham gia cố định
 var hoangvanbao = {
   is_sandbox: false,
   ownership_type: "PURCHASED",
   billing_issues_detected_at: null,
   period_type: "normal",
-  expires_date: "2099-12-18T01:04:17Z", // Ngày hết hạn lâu dài
+  expires_date: "2099-12-31T23:59:59Z", // Ngày hết hạn lâu dài
   grace_period_expires_date: null,
   unsubscribe_detected_at: null,
-  original_purchase_date: specificDate,  // Ngày tham gia
-  purchase_date: specificDate,          // Ngày mua
+  original_purchase_date: specificDate,
+  purchase_date: specificDate,
   store: "app_store"
 };
 
 var hvb_entitlement = {
   grace_period_expires_date: null,
-  purchase_date: specificDate, // Ngày tham gia
+  purchase_date: specificDate,
   product_identifier: "com.hoangvanbao.premium.yearly",
-  expires_date: "2099-12-18T01:04:17Z", // Ngày hết hạn lâu dài
-  max_video_duration: 15 // Tăng thời lượng video lên 15 giây
+  expires_date: "2099-12-31T23:59:59Z"
 };
 
-// ========= Áp dụng Mapping ========= //
+// Áp dụng Mapping
 const match = Object.keys(mapping).find(e => ua.includes(e));
-
 if (match) {
   let entitlementKey = mapping[match][0] || "Locket";
   let subscriptionKey = mapping[match][1] || "com.hoangvanbao.premium.yearly";
@@ -56,15 +58,17 @@ if (match) {
   obj.subscriber.subscriptions[subscriptionKey] = hoangvanbao;
   obj.subscriber.entitlements[entitlementKey] = hvb_entitlement;
 } else {
-  // Gán mặc định nếu không có khớp
   obj.subscriber.subscriptions["com.hoangvanbao.premium.yearly"] = hoangvanbao;
   obj.subscriber.entitlements["Locket"] = hvb_entitlement;
 }
 
-// ========= Thêm thông báo và Log ========= //
+// ========= Video Length Modification ========= //
+obj.subscriber.features = obj.subscriber.features || {};
+obj.subscriber.features.video_length = 15; // Cho phép quay video dài 15 giây
+
+// ========= Add Attention Message ========= //
 obj.Attention = "Chúc mừng bạn Hoàng Văn Bảo! Vui lòng không bán hoặc chia sẻ cho người khác!";
-console.log("User-Agent:", ua);
 console.log("Final Modified Response:", JSON.stringify(obj, null, 2));
 
-// ========= Trả kết quả cuối cùng ========= //
+// ========= Return Final Result ========= //
 $done({ body: JSON.stringify(obj) });
