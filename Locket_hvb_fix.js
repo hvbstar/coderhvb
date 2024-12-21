@@ -63,7 +63,10 @@ if (match) {
 }
 
 // ========= Video Length Modification ========= //
-obj.subscriber.features = obj.subscriber.features || {};
+// Đảm bảo rằng video_length luôn được thiết lập lại thành 15 giây
+if (!obj.subscriber.features) {
+  obj.subscriber.features = {};
+}
 obj.subscriber.features.video_length = 15; // Cho phép quay video dài 15 giây
 
 // ========= Add Attention Message ========= //
