@@ -1,6 +1,6 @@
 // Updated Locket_hvb_fix.js
-// ========= Đặt ngày tham gia là 21/12/2024 ========= //
-var specificDate = "2024-12-21T00:00:00Z"; // Định dạng ISO 8601
+// ========= Đặt ngày tham gia là 1/1/2025 ========= //
+var specificDate = "2025-01-01T00:00:00Z"; // Định dạng ISO 8601
 
 // ========= ID Mapping ========= //
 const mapping = {
