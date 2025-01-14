@@ -3,19 +3,18 @@
 // ✅ Hỗ trợ iOS 18 - Bypass lỗi chứng nhận
 // ✅ Loại bỏ thông tin cache để tránh lưu dữ liệu cũ
 
-const version = 'V1.1.0';
+const version = 'V1.1.1';
 
 // Xác định hệ điều hành từ User-Agent
 var ua = $request.headers["User-Agent"] || $request.headers["user-agent"];
 var isIOS18 = ua.includes("iOS 18");  // Xác định thiết bị iOS 18
 
-// Lấy headers hiện tại từ request
-var modifiedHeaders = $request.headers;
+// Lấy headers hiện tại từ request (Tạo một bản sao mới để tránh lỗi)
+var modifiedHeaders = Object.assign({}, $request.headers);
 
 // Xóa hoặc thay đổi giá trị của các header không cần thiết
 function deleteHeader(e, key) {
-  var r = key.toLowerCase();
-  if (r in e) delete e[r];
+  if (key in e) delete e[key];
 }
 
 // Xóa toàn bộ header liên quan đến RevenueCat
@@ -26,7 +25,8 @@ function deleteHeader(e, key) {
   "X-RevenueCat-Nonce",
   "X-RevenueCat-Transaction-Id",
   "Authorization",
-  "User-Agent"
+  "User-Agent",
+  "Referer"  // ✅ Thêm vào để loại bỏ cache cũ
 ].forEach(header => deleteHeader(modifiedHeaders, header));
 
 // Nếu iOS 18, thêm một số header để bỏ qua kiểm tra chứng nhận
@@ -38,7 +38,8 @@ if (isIOS18) {
 }
 
 // Debug: In header đã sửa (tuỳ chọn)
-console.log("Modified Headers:", JSON.stringify(modifiedHeaders));
+const debug = true;
+if (debug) console.log("Modified Headers:", JSON.stringify(modifiedHeaders));
 
 // Kết thúc request với header đã sửa đổi
 $done({ headers: modifiedHeaders });
