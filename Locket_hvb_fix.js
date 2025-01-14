@@ -5,18 +5,24 @@
 
 // Ngày tham gia cố định
 var specificDate = "2025-01-01T00:00:00Z";
+var expiresDate = "2099-12-30T01:04:17Z"; // Đồng bộ ngày hết hạn
 
 // Danh sách mapping ID
 const mapping = {
-  '%E8%BD%A6%E7%A5%A8%E7%A5%A8': ['vip+watch_vip'],
-  'Locket': ['Gold']
+  'Locket': ['Gold', 'com.hoangvanbao.premium.yearly'],
+  'VIP': ['vip+watch_vip', 'com.hoangvanbao.vip.yearly']
 };
 
 // Xác định hệ điều hành từ User-Agent
 var ua = $request.headers["User-Agent"] || $request.headers["user-agent"];
-var isIOS18 = ua.includes("iOS 18");  // Xác định thiết bị iOS 18
+var isIOS18 = /iOS (\d+)/.test(ua) && parseInt(RegExp.$1) >= 18;
 
-// Kiểm tra và xử lý response
+// Kiểm tra response trước khi parse JSON
+if (!$response.body) {
+  console.log("Lỗi: Response body không tồn tại!");
+  $done({});
+}
+
 try {
   var obj = JSON.parse($response.body);
 } catch (e) {
@@ -31,11 +37,11 @@ if (!obj.subscriber.subscriptions) obj.subscriber.subscriptions = {};
 
 // Định nghĩa gói Locket Gold
 var hoangvanbao = {
-  is_sandbox: false,
-  ownership_type: "PURCHASED",
+  is_sandbox: isIOS18,
+  ownership_type: isIOS18 ? "FAMILY" : "PURCHASED",
   billing_issues_detected_at: null,
   period_type: "normal",
-  expires_date: "2099-12-18T01:04:17Z",
+  expires_date: expiresDate,
   grace_period_expires_date: null,
   unsubscribe_detected_at: null,
   original_purchase_date: specificDate,
@@ -47,7 +53,7 @@ var hvb_entitlement = {
   grace_period_expires_date: null,
   purchase_date: specificDate,
   product_identifier: "com.hoangvanbao.premium.yearly",
-  expires_date: "2099-12-18T01:04:17Z"
+  expires_date: expiresDate
 };
 
 // Áp dụng mapping dựa trên User-Agent
@@ -68,7 +74,7 @@ if (isIOS18) {
   obj.subscriber.subscriptions["com.hoangvanbao.premium.yearly"].ownership_type = "FAMILY";
   obj.subscriber.subscriptions["com.hoangvanbao.premium.yearly"].is_sandbox = true;
   obj.subscriber.subscriptions["com.hoangvanbao.premium.yearly"].store = "app_store";
-  obj.subscriber.subscriptions["com.hoangvanbao.premium.yearly"].expires_date = "2099-12-30T01:04:17Z";
+  obj.subscriber.subscriptions["com.hoangvanbao.premium.yearly"].expires_date = expiresDate;
 }
 
 // 📌 Thêm header để bypass kiểm tra chứng nhận
