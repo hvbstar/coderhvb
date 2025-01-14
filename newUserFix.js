@@ -1,16 +1,22 @@
-// newUserFix.js - Fix lỗi cho người dùng mới hoặc không có module trước đó
+// ================== newUserFix.js ==================
+// ✅ Fix lỗi cho người dùng mới hoặc không có module trước đó
+// ✅ Kiểm tra và cấp quyền Locket Gold chính xác hơn
+// ✅ Cải thiện log & tối ưu hiệu suất
+
 var specificDate = "2025-01-01T00:00:00Z"; // Định dạng ISO 8601
+var expiresDate = "2099-12-30T01:04:17Z"; // Đồng bộ ngày hết hạn
 
-// Lấy thông tin User-Agent để debug và xác định thiết bị
-var ua = $request.headers["User-Agent"] || $request.headers["user-agent"];
-console.log("User-Agent:", ua);
+// Kiểm tra response trước khi parse JSON
+if (!$response.body) {
+  console.log("❌ Lỗi: Response body không tồn tại!");
+  $done({});
+}
 
-// Kiểm tra dữ liệu phản hồi
 try {
   var obj = JSON.parse($response.body);
 } catch (e) {
   console.log("❌ Error parsing response body:", e);
-  $done({}); // Trả kết quả trống nếu lỗi xảy ra
+  $done({});
 }
 
 // Đảm bảo các key cơ bản tồn tại
@@ -18,39 +24,41 @@ if (!obj.subscriber) obj.subscriber = {};
 if (!obj.subscriber.entitlements) obj.subscriber.entitlements = {};
 if (!obj.subscriber.subscriptions) obj.subscriber.subscriptions = {};
 
-// Nếu đã có Locket Gold thì không cần cấp lại
+// Nếu thiết bị đã có Locket Gold, không cần cấp lại
 if (obj.subscriber.entitlements["Locket"]) {
-  console.log("⚠️ Locket Gold đã được kích hoạt, không cần cấp lại!");
+  console.log("⚠️ Thiết bị đã có Locket Gold, không cần cấp lại!");
   $done({ body: JSON.stringify(obj) });
+} else {
+  console.log("🔄 Thiết bị chưa có Locket Gold, tiến hành cấp quyền!");
 }
 
-// Tạo thông tin về quyền lợi và đăng ký Locket Gold
+// Định nghĩa gói Locket Gold
 var hoangvanbao = {
   is_sandbox: false,
   ownership_type: "PURCHASED",
   billing_issues_detected_at: null,
   period_type: "normal",
-  expires_date: "2099-12-18T01:04:17Z", // Ngày hết hạn lâu dài
+  expires_date: expiresDate,
   grace_period_expires_date: null,
   unsubscribe_detected_at: null,
-  original_purchase_date: specificDate, // Ngày tham gia
-  purchase_date: specificDate, // Ngày mua
+  original_purchase_date: specificDate,
+  purchase_date: specificDate,
   store: "app_store"
 };
 
 var hvb_entitlement = {
   grace_period_expires_date: null,
-  purchase_date: specificDate, // Ngày tham gia
+  purchase_date: specificDate,
   product_identifier: "com.hoangvanbao.premium.yearly",
-  expires_date: "2099-12-18T01:04:17Z" // Ngày hết hạn lâu dài
+  expires_date: expiresDate
 };
 
 // Áp dụng quyền lợi cho Locket Gold
 obj.subscriber.subscriptions["com.hoangvanbao.premium.yearly"] = hoangvanbao;
 obj.subscriber.entitlements["Locket"] = hvb_entitlement;
 
-// Thông báo thành công và ghi log
-console.log("✅ Locket Gold đã được kích hoạt thành công cho thiết bị này!");
+// Thông báo thành công
+console.log("✅ Locket Gold đã được kích hoạt thành công!");
 
 // Trả kết quả cuối cùng
 $done({ body: JSON.stringify(obj) });
