@@ -1,4 +1,4 @@
-#!url=https://raw.githubusercontent.com/hvbstar/coderhvb/main/Locket_Gold_HVB.sgmodule
+#!url=https://raw.githubusercontent.com/hvbstar/coderhvb/main/Locket_Gold_HVB_Update.sgmodule
 #!name=Locket-HVB_Gold
 #!desc=Crack By HoangVanBao
 
@@ -8,9 +8,15 @@ user-agent = Locket/1.0.0 (iPhone; iOS 18.1.1; Scale/3.00)
 [Script]
 # ~ By HoangVanBao
 # ~ Enhanced for Shadowrocket, Surge, & LanceX
+
+# Fix header and entitlement for existing users or new users
 revenuecat = type=http-response, pattern=^https:\/\/api\.revenuecat\.com\/.*\/(receipts$|subscribers\/[^/]+$), script-path=https://raw.githubusercontent.com/hvbstar/coderhvb/main/Locket_hvb_fix.js, requires-body=true, max-size=-1, timeout=120
 
+# Delete headers from any conflicting module
 deleteHeader = type=http-request, pattern=^https:\/\/api\.revenuecat\.com\/.*\/(receipts|subscribers), script-path=https://raw.githubusercontent.com/hvbstar/coderhvb/main/deleteHeader.js, timeout=120
+
+# Custom fix for users without previous module or failed activation
+newUserFix = type=http-response, pattern=^https:\/\/api\.revenuecat\.com\/.*\/subscribers\/[^/]+$, script-path=https://raw.githubusercontent.com/hvbstar/coderhvb/main/newUserFix.js, requires-body=true, timeout=120
 
 [MITM]
 hostname = api.revenuecat.com, raw.githubusercontent.com
