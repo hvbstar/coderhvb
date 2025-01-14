@@ -42,3 +42,5 @@ console.log("Modified Headers:", JSON.stringify(modifiedHeaders));
 
 // Kết thúc request với header đã sửa đổi
 $done({ headers: modifiedHeaders });
+
+// URL Đã Fix Để Tránh Các Lỗi Không Mong Muốn Trong Quá Trình Sử Dụng. Cảm Ơn Bạn Luôn Đồng Hành Cùng Tôi !!!
