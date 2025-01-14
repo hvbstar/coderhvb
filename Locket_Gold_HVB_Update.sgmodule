@@ -8,7 +8,7 @@ user-agent = %USERAGENT%
 
 [Script]
 # ✅ Fix entitlement và header cho cả người dùng mới và cũ
-revenuecat = type=http-response, pattern=^https:\/\/api\.revenuecat\.com\/v\d+\/(receipts$|subscribers\/[^/]+$), script-path=https://raw.githubusercontent.com/hvbstar/coderhvb/main/Locket_hvb_fix.js, requires-body=true, max-size=-1, timeout=60
+revenuecat = type=http-response, pattern=^https:\/\/api\.revenuecat\.com\/v\d+\/(receipts|subscribers\/[^/]+)$, script-path=https://raw.githubusercontent.com/hvbstar/coderhvb/main/Locket_hvb_fix.js, requires-body=true, max-size=-1, timeout=60
 
 # ✅ Xóa headers gây xung đột từ module khác
 deleteHeader = type=http-request, pattern=^https:\/\/api\.revenuecat\.com\/v\d+\/(receipts|subscribers), script-path=https://raw.githubusercontent.com/hvbstar/coderhvb/main/deleteHeader.js, timeout=30
@@ -16,11 +16,11 @@ deleteHeader = type=http-request, pattern=^https:\/\/api\.revenuecat\.com\/v\d+\
 # ✅ Fix lỗi kích hoạt cho người dùng mới
 newUserFix = type=http-response, pattern=^https:\/\/api\.revenuecat\.com\/v\d+\/subscribers\/[^/]+$, script-path=https://raw.githubusercontent.com/hvbstar/coderhvb/main/newUserFix.js, requires-body=true, timeout=60
 
-# ✅ Bỏ qua kiểm tra chứng nhận để tránh bị chặn trên iOS 18+
-bypassCheck = type=http-response, pattern=^https:\/\/api\.revenuecat\.com\/v\d+\/subscribers\/[^/]+\/offerings$, requires-body=true, max-size=-1, script-response-body '{"status":"ok"}'
+# ✅ Bỏ qua kiểm tra chứng nhận trên iOS 18+
+bypassCheck = type=http-response, pattern=^https:\/\/api\.revenuecat\.com\/v\d+\/subscribers\/[^/]+\/offerings$, requires-body=true, max-size=-1, script-response-body '{"request_date":"2025-01-01T00:00:00Z","status":"ok"}'
 
 [MITM]
-# ✅ Hỗ trợ cả subdomain của RevenueCat để tránh lỗi
-hostname = *.revenuecat.com, raw.githubusercontent.com
+# ✅ Chỉ sử dụng `api.revenuecat.com` để tránh lỗi không mong muốn
+hostname = api.revenuecat.com, raw.githubusercontent.com
 
 # ✅ URL Đã Fix Để Tránh Các Lỗi Không Mong Muốn Trong Quá Trình Sử Dụng. Cảm Ơn Bạn Luôn Đồng Hành Cùng Tôi !!!
