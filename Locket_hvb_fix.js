@@ -1,4 +1,4 @@
-// Updated Locket_hvb_fix.js
+// Locket_hvb_fix.js
 // ========= Đặt ngày tham gia là 1/1/2025 ========= //
 var specificDate = "2025-01-01T00:00:00Z"; // Định dạng ISO 8601
 
@@ -60,10 +60,10 @@ if (match) {
   obj.subscriber.entitlements["Locket"] = hvb_entitlement;
 }
 
-// ========= Thêm thông báo và Log ========= //
+// Thêm thông báo và Log
 obj.Attention = "Chúc mừng bạn Hoàng Văn Bảo! Vui lòng không bán hoặc chia sẻ cho người khác!";
 console.log("User-Agent:", ua);
 console.log("Final Modified Response:", JSON.stringify(obj, null, 2));
 
-// ========= Trả kết quả cuối cùng ========= //
+// Trả kết quả cuối cùng
 $done({ body: JSON.stringify(obj) });
