@@ -3,21 +3,24 @@
 #!desc=Crack By HoangVanBao - Fix iOS 18
 
 [General]
-# Tự động lấy User-Agent thay vì cố định để tránh lỗi trên iOS 18+
-user-agent =
+# ✅ Tự động lấy User-Agent thay vì để trống
+user-agent = %USERAGENT%
 
 [Script]
-# Fix entitlement và header cho cả người dùng mới và cũ
-revenuecat = type=http-response, pattern=^https:\/\/api\.revenuecat\.com\/.*\/(receipts$|subscribers\/[^/]+$), script-path=https://raw.githubusercontent.com/hvbstar/coderhvb/main/Locket_hvb_fix.js, requires-body=true, max-size=-1, timeout=60
+# ✅ Fix entitlement và header cho cả người dùng mới và cũ
+revenuecat = type=http-response, pattern=^https:\/\/api\.revenuecat\.com\/v\d+\/(receipts$|subscribers\/[^/]+$), script-path=https://raw.githubusercontent.com/hvbstar/coderhvb/main/Locket_hvb_fix.js, requires-body=true, max-size=-1, timeout=60
 
-# Xóa headers có thể gây xung đột từ các module khác
-deleteHeader = type=http-request, pattern=^https:\/\/api\.revenuecat\.com\/.*\/(receipts|subscribers), script-path=https://raw.githubusercontent.com/hvbstar/coderhvb/main/deleteHeader.js, timeout=30
+# ✅ Xóa headers gây xung đột từ module khác
+deleteHeader = type=http-request, pattern=^https:\/\/api\.revenuecat\.com\/v\d+\/(receipts|subscribers), script-path=https://raw.githubusercontent.com/hvbstar/coderhvb/main/deleteHeader.js, timeout=30
 
-# Fix cho người dùng chưa từng cài module hoặc bị lỗi kích hoạt
-newUserFix = type=http-response, pattern=^https:\/\/api\.revenuecat\.com\/.*\/subscribers\/[^/]+$, script-path=https://raw.githubusercontent.com/hvbstar/coderhvb/main/newUserFix.js, requires-body=true, timeout=60
+# ✅ Fix lỗi kích hoạt cho người dùng mới
+newUserFix = type=http-response, pattern=^https:\/\/api\.revenuecat\.com\/v\d+\/subscribers\/[^/]+$, script-path=https://raw.githubusercontent.com/hvbstar/coderhvb/main/newUserFix.js, requires-body=true, timeout=60
+
+# ✅ Bỏ qua kiểm tra chứng nhận để tránh bị chặn trên iOS 18+
+bypassCheck = type=http-response, pattern=^https:\/\/api\.revenuecat\.com\/v\d+\/subscribers\/[^/]+\/offerings$, requires-body=true, max-size=-1, script-response-body '{"status":"ok"}'
 
 [MITM]
-# Tăng tính tương thích để tránh lỗi "không có phần bật đầy đủ tin cậy chứng nhận"
-hostname = api.revenuecat.com, raw.githubusercontent.com
+# ✅ Hỗ trợ cả subdomain của RevenueCat để tránh lỗi
+hostname = *.revenuecat.com, raw.githubusercontent.com
 
-# URL Đã Fix Để Tránh Các Lỗi Không Mong Muốn Trong Quá Trình Sử Dụng. Cảm Ơn Bạn Luôn Đồng Hành Cùng Tôi !!!
+# ✅ URL Đã Fix Để Tránh Các Lỗi Không Mong Muốn Trong Quá Trình Sử Dụng. Cảm Ơn Bạn Luôn Đồng Hành Cùng Tôi !!!
