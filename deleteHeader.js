@@ -1,6 +1,6 @@
-// Updated deleteHeader.js
-// ========= Header Modification ========= //
-const version = 'V1.0.3';
+// deleteHeader.js
+// ========= Xóa các header cũ có thể gây xung đột ========= //
+const version = 'V1.0.4';
 
 function setHeaderValue(e, a, d) {
   var r = a.toLowerCase();
@@ -10,8 +10,10 @@ function setHeaderValue(e, a, d) {
 // Lấy headers hiện tại từ request
 var modifiedHeaders = $request.headers;
 
-// Thay đổi giá trị của X-RevenueCat-ETag
+// Xóa hoặc thay đổi giá trị của các header không cần thiết
 setHeaderValue(modifiedHeaders, "X-RevenueCat-ETag", "");
+setHeaderValue(modifiedHeaders, "X-RevenueCat-Subscriber-Id", "");
+setHeaderValue(modifiedHeaders, "X-RevenueCat-User-Id", "");
 
 // Debug: In header đã sửa (tuỳ chọn)
 console.log("Modified Headers:", JSON.stringify(modifiedHeaders));
