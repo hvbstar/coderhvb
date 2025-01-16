@@ -14,3 +14,5 @@ deleteHeader = type=http-request, pattern=^https:\/\/api\.revenuecat\.com\/.*\/(
 
 [MITM]
 hostname = api.revenuecat.com, raw.githubusercontent.com
+
+# ~ Hoàng Văn Bảo
