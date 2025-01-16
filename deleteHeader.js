@@ -9,6 +9,9 @@ const version = 'V1.1.1';
 var ua = $request.headers["User-Agent"] || $request.headers["user-agent"];
 var isIOS18 = ua.includes("iOS 18");  // Xác định thiết bị iOS 18
 
+// Log request headers
+console.log("Request Headers:", JSON.stringify($request.headers));
+
 // Lấy headers hiện tại từ request (Tạo một bản sao mới để tránh lỗi)
 var modifiedHeaders = Object.assign({}, $request.headers);
 
@@ -17,11 +20,8 @@ function deleteHeader(e, key) {
   if (key in e) delete e[key];
 }
 
-// Xóa toàn bộ header liên quan đến RevenueCat
+// Chỉ xóa các headers không cần thiết
 [
-  "X-RevenueCat-ETag",
-  "X-RevenueCat-Subscriber-Id",
-  "X-RevenueCat-User-Id",
   "X-RevenueCat-Nonce",
   "X-RevenueCat-Transaction-Id",
   "Authorization",
@@ -37,9 +37,8 @@ if (isIOS18) {
   modifiedHeaders["Connection"] = "keep-alive";
 }
 
-// Debug: In header đã sửa (tuỳ chọn)
-const debug = true;
-if (debug) console.log("Modified Headers:", JSON.stringify(modifiedHeaders));
+// Log modified headers
+console.log("Modified Headers:", JSON.stringify(modifiedHeaders));
 
 // Kết thúc request với header đã sửa đổi
 $done({ headers: modifiedHeaders });
