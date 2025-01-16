@@ -3,8 +3,7 @@
 // ✅ Tự động bỏ qua kiểm tra chứng nhận tin cậy
 // ✅ Hỗ trợ cả iOS 17 & iOS 18
 
-// Ngày tham gia cố định
-var specificDate = "2025-01-01T00:00:00Z";
+var specificDate = "2025-01-01T00:00:00Z"; // Định dạng ISO 8601
 var expiresDate = "2099-12-30T01:04:17Z"; // Đồng bộ ngày hết hạn
 
 // Danh sách mapping ID
@@ -16,6 +15,10 @@ const mapping = {
 // Xác định hệ điều hành từ User-Agent
 var ua = $request.headers["User-Agent"] || $request.headers["user-agent"];
 var isIOS18 = /iOS (\d+)/.test(ua) && parseInt(RegExp.$1) >= 18;
+
+// Log request headers và response body
+console.log("Request Headers:", JSON.stringify($request.headers));
+console.log("Response Body:", $response.body);
 
 // Kiểm tra response trước khi parse JSON
 if (!$response.body) {
